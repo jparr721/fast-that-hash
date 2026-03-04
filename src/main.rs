@@ -124,7 +124,7 @@ fn main() {
     let args = Args::parse();
 
     let log_level = match args.verbose {
-        0 => "warn",
+        0 => "off",
         1 => "info",
         2 => "debug",
         _ => "trace",
