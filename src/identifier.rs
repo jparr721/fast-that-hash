@@ -22,12 +22,31 @@ pub trait Identify {
     fn identify(&self, input: &str) -> Vec<Match>;
 }
 
+pub struct FormatIdentifier;
 pub struct HashIdentifier;
 pub struct MastercardIdentifier;
 pub struct RegexIdentifier;
 pub struct MacVendorIdentifier;
 pub struct PhoneCodeIdentifier;
 pub struct FileSignatureIdentifier;
+
+impl Identify for FormatIdentifier {
+    fn identify(&self, input: &str) -> Vec<Match> {
+        crate::formats::identify_format(input)
+            .into_iter()
+            .map(|f| Match {
+                matched_text: input.to_string(),
+                name: f.name,
+                rarity: f.rarity,
+                desc: Some(f.desc),
+                url: None,
+                tags: f.tags,
+                hashcat: f.hashcat,
+                john: f.john,
+            })
+            .collect()
+    }
+}
 
 impl Identify for HashIdentifier {
     fn identify(&self, input: &str) -> Vec<Match> {
@@ -161,6 +180,7 @@ impl Identify for FileSignatureIdentifier {
 
 pub fn all_identifiers() -> Vec<Box<dyn Identify>> {
     vec![
+        Box::new(FormatIdentifier),  // Format detection first (highest confidence)
         Box::new(HashIdentifier),
         Box::new(MastercardIdentifier),
         Box::new(RegexIdentifier),
@@ -322,5 +342,29 @@ mod tests {
             .collect();
         // Should get hash matches at minimum
         assert!(!results.is_empty());
+    }
+
+    #[test]
+    fn test_format_identifier_pwdump() {
+        let id = FormatIdentifier;
+        let results = id.identify("Jason:502:aad3c435b514a4eeaad3b935b51304fe:c46b9e588fa0d112de6f59fd6d58eae3:::");
+        assert!(!results.is_empty(), "FormatIdentifier should match pwdump");
+        assert!(results.iter().any(|m| m.name == "NTLM"));
+        assert!(results[0].rarity > 0.8, "format matches should have high confidence");
+    }
+
+    #[test]
+    fn test_format_identifier_shadow() {
+        let id = FormatIdentifier;
+        let results = id.identify("root:$6$qdMgClgO2dQWB37F$jhexCX1SdsCAi0OZmoRVAPnWSwuP/mHVhXIMJfKlaacxFkwWLDZ0ViF8Ur3WcHashcatVp2WShcEILi8QZCbt/:19000:0:99999:7:::");
+        assert!(!results.is_empty());
+        assert_eq!(results[0].name, "SHA-512 Crypt");
+    }
+
+    #[test]
+    fn test_all_identifiers_includes_format() {
+        let ids = all_identifiers();
+        let results: Vec<Match> = ids.iter().flat_map(|id| id.identify("Jason:502:aad3c435b514a4eeaad3b935b51304fe:c46b9e588fa0d112de6f59fd6d58eae3:::")).collect();
+        assert!(results.iter().any(|m| m.name == "NTLM" && m.rarity > 0.8));
     }
 }
