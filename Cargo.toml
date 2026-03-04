@@ -3,6 +3,10 @@ name = "fast-that-hash"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "fth"
+path = "src/main.rs"
+
 [dependencies]
 clap = { version = "4.5.60", features = ["derive"] }
 colored = "3.1.1"

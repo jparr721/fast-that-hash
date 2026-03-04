@@ -4,7 +4,6 @@ use regex::RegexSet;
 
 pub struct RegexPattern {
     pub name: &'static str,
-    pub plural_name: bool,
     pub description: Option<&'static str>,
     pub rarity: f64,
     pub url: Option<&'static str>,
@@ -159,7 +158,6 @@ static PATTERNS: &[&str] = &[
 static REGEX_PATTERNS: &[RegexPattern] = &[
     RegexPattern {
         name: "PGP Public Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -168,7 +166,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "PGP Private Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -177,7 +174,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "SSH RSA Public Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -186,7 +182,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "PEM-formatted Private Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -195,7 +190,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "SSH ECDSA Public Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -204,7 +198,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "SSH ED25519 Public Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -213,7 +206,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Access-Control-Allow-Header",
-        plural_name: false,
         description: Some("Used for [#CAE4F1][link=https://en.wikipedia.org/wiki/Cross-origin_resource_sharing]Cross-Origin Resource Sharing (CORS)[/link][/#CAE4F1]"),
         rarity: 1.0_f64,
         url: None,
@@ -222,7 +214,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "TryHackMe Flag Format",
-        plural_name: false,
         description: Some("Used for Capture The Flags at https://tryhackme.com"),
         rarity: 1.0_f64,
         url: None,
@@ -231,7 +222,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "HackTheBox Flag Format",
-        plural_name: false,
         description: Some("Used for Capture The Flags at https://hackthebox.eu"),
         rarity: 1.0_f64,
         url: None,
@@ -240,7 +230,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Capture The Flag (CTF) Flag",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -249,7 +238,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "YouTube Video",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -258,7 +246,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Bitcoin Cash (BCH) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: Some("https://www.blockchain.com/bch/address/"),
@@ -267,7 +254,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Heroku API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -276,7 +262,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Slack API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -285,7 +270,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Slack Webhook",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -294,7 +278,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services Simple Storage (AWS S3) URL",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -303,7 +286,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services Simple Storage (AWS S3) Internal URL",
-        plural_name: false,
         description: Some("Internal URL, only accessible via the virtual private cloud."),
         rarity: 1.0_f64,
         url: None,
@@ -312,7 +294,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Square Application Secret",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -321,7 +302,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Square Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -330,7 +310,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Stripe API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -339,7 +318,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "GitHub Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -348,7 +326,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Resource Name (ARN)",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -357,7 +334,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Facebook Secret Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -366,7 +342,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Facebook Client ID",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -375,7 +350,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Twitter Secret API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -384,7 +358,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Twitter Client ID",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -393,7 +366,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Node Package Manager (NPM) Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -402,7 +374,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "GitHub Personal Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -411,7 +382,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "GitHub OAuth Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -420,7 +390,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "GitHub App Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -429,7 +398,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "GitHub Refresh Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -438,7 +406,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "LinkedIn Client ID",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -447,7 +414,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "LinkedIn Secret Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -456,7 +422,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Stripe Restricted API Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -465,7 +430,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Stripe Standard API Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -474,7 +438,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Square OAuth Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -483,7 +446,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "PayPal/Braintree Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -492,7 +454,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "MWS Auth Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -501,7 +462,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Picatic API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -510,7 +470,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google OAuth Access Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -519,7 +478,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google OAuth Client ID",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -528,7 +486,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "StackHawk API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -537,7 +494,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "NuGet API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -546,7 +502,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "SendGrid Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -555,7 +510,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Zoho Webhook Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -564,7 +518,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Zapier Webhook Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -573,7 +526,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "New Relic Admin API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -582,7 +534,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "New Relic Insights API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -591,7 +542,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "New Relic REST API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -600,7 +550,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "New Relic Synthetics Location Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -609,7 +558,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "New Relic User API Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -618,7 +566,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Microsoft Teams Webhook",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -627,7 +574,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google FCM Server Key",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -636,7 +582,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google Calendar URI",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -645,7 +590,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Discord Webhook",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -654,7 +598,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Guilded Webhook",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -663,7 +606,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Cloudinary Credentials",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -672,7 +614,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "PyPI Upload Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -681,7 +622,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Shopify Private App Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -690,7 +630,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Shopify Custom App Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -699,7 +638,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Shopify Access Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -708,7 +646,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Shopify Shared Secret",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -717,7 +654,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Dynatrace Token",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -726,7 +662,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon SNS Topic",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -735,7 +670,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Notion Note URI",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -744,7 +678,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Notion Team Note URI",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -753,7 +686,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Nano (NANO) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: Some("https://nanocrawler.cc/explorer/account/"),
@@ -762,7 +694,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Time-Based One-Time Password (TOTP) URI",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -771,7 +702,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "SSHPass Clear Password Argument",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -780,7 +710,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Mount Command With Clear Credentials",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -789,7 +718,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "CIFS Fstab Entry With Clear Credentials",
-        plural_name: false,
         description: None,
         rarity: 1.0_f64,
         url: None,
@@ -798,7 +726,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google Cloud Platform API Key",
-        plural_name: false,
         description: None,
         rarity: 0.8_f64,
         url: None,
@@ -807,7 +734,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Mailchimp API Key",
-        plural_name: false,
         description: None,
         rarity: 0.8_f64,
         url: None,
@@ -816,7 +742,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Notion Integration Token",
-        plural_name: false,
         description: Some("A Notion API integration's internal integration token."),
         rarity: 0.8_f64,
         url: None,
@@ -825,7 +750,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Digital Object Identifier (DOI)",
-        plural_name: false,
         description: None,
         rarity: 0.7_f64,
         url: None,
@@ -834,7 +758,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Internet Protocol (IP) Address Version 6",
-        plural_name: false,
         description: None,
         rarity: 0.7_f64,
         url: Some("https://www.shodan.io/host/"),
@@ -843,7 +766,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Uniform Resource Locator (URL)",
-        plural_name: false,
         description: None,
         rarity: 0.7_f64,
         url: None,
@@ -852,7 +774,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Internet Protocol (IP) Address Version 4",
-        plural_name: false,
         description: None,
         rarity: 0.7_f64,
         url: Some("https://www.shodan.io/host/"),
@@ -861,7 +782,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Bitcoin (₿) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.7_f64,
         url: Some("https://www.blockchain.com/btc/address/"),
@@ -870,7 +790,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Latitude & Longitude Coordinates",
-        plural_name: true,
         description: None,
         rarity: 0.7_f64,
         url: Some("https://www.google.com/maps/place/"),
@@ -879,7 +798,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "EUI-48 Identifier (Ethernet, WiFi, Bluetooth, etc)",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: Some("https://maclookup.app/search/macs/"),
@@ -888,7 +806,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Dogecoin (DOGE) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: Some("https://dogechain.info/address/"),
@@ -897,7 +814,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Email Address",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -906,7 +822,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Italian Fiscal Code",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -915,7 +830,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Phone Number",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -924,7 +838,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "American Social Security Number",
-        plural_name: false,
         description: Some("An [#CAE4F1][link=https://en.wikipedia.org/wiki/Social_Security_number]American Identification Number[/link][/#CAE4F1]"),
         rarity: 0.5_f64,
         url: None,
@@ -933,7 +846,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Bitly Secret Key",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -942,7 +854,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Visual Studio App Center API Token",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -951,7 +862,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "YouTube Channel ID",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: Some("https://www.youtube.com/channel/"),
@@ -960,7 +870,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Discord Bot Token",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: None,
@@ -969,7 +878,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "UUID",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: Some("https://www.uuidtools.com/api/decode/"),
@@ -978,7 +886,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "United States Postal Service (UPS) Tracking Number",
-        plural_name: false,
         description: None,
         rarity: 0.5_f64,
         url: Some("https://www.ups.com/track?tracknum="),
@@ -987,7 +894,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Turkish License Plate Number",
-        plural_name: false,
         description: Some("The [#CAE4F1][link=https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Turkey]vehicle registration plate number of Turkey[/link][/#CAE4F1]"),
         rarity: 0.4_f64,
         url: None,
@@ -996,7 +902,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Date of Birth",
-        plural_name: false,
         description: None,
         rarity: 0.4_f64,
         url: None,
@@ -1005,7 +910,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Monero (XMR) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1014,7 +918,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Litecoin (LTC) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: Some("https://live.blockcypher.com/ltc/address/"),
@@ -1023,7 +926,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Ripple (XRP) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: Some("https://xrpscan.com/account/"),
@@ -1032,7 +934,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "American Express Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1041,7 +942,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "BCGlobal Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1050,7 +950,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Carte Blanche Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1059,7 +958,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Diners Club Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1068,7 +966,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Discover Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1077,7 +974,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "MasterCard Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1086,7 +982,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Maestro Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1095,7 +990,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Visa Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1104,7 +998,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Insta Payment Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1113,7 +1006,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "JCB Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1122,7 +1014,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Korean Local Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1131,7 +1022,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Laser Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1140,7 +1030,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Solo Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1149,7 +1038,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Switch Card Number",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1158,7 +1046,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Ethereum (ETH) Wallet Address",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: Some("https://etherscan.io/address/"),
@@ -1167,7 +1054,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Slack Token",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1176,7 +1062,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services Organization Identifier",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1185,7 +1070,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google API Key",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1194,7 +1078,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google OAuth Token",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1203,7 +1086,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Mailgun API Key",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1212,7 +1094,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Twilio API Key",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1221,7 +1102,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Twilio Account SID",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1230,7 +1110,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Twilio Application SID",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1239,7 +1118,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Google ReCaptcha API Key",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1248,7 +1126,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Standard Identification Number (ASIN)",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: Some("https://amzn.com/"),
@@ -1257,7 +1134,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Facebook App Token",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: Some("https://developers.facebook.com/tools/debug/accesstoken/?access_token="),
@@ -1266,7 +1142,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Datadog Client Token",
-        plural_name: false,
         description: None,
         rarity: 0.3_f64,
         url: None,
@@ -1275,7 +1150,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "JSON Web Token (JWT)",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: None,
@@ -1284,7 +1158,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services Access Key",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: None,
@@ -1293,7 +1166,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services Secret Access Key",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: None,
@@ -1302,7 +1174,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Amazon Web Services EC2 Instance ID",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: None,
@@ -1311,7 +1182,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Turkish Identification Number",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: None,
@@ -1320,7 +1190,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Facebook Access Token",
-        plural_name: false,
         description: None,
         rarity: 0.2_f64,
         url: Some("https://developers.facebook.com/tools/debug/accesstoken/?access_token="),
@@ -1329,7 +1198,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "ObjectID",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
@@ -1338,7 +1206,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Recent Unix Timestamp",
-        plural_name: false,
         description: Some("Seconds elapsed since unix epoch: 1970, between year 2001 and 2286"),
         rarity: 0.0_f64,
         url: None,
@@ -1347,7 +1214,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Recent Unix Millisecond Timestamp",
-        plural_name: false,
         description: Some("Milliseconds elapsed since unix epoch: 1970, between year 2001 and 2286"),
         rarity: 0.0_f64,
         url: None,
@@ -1356,7 +1222,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Unix Timestamp",
-        plural_name: false,
         description: Some("Seconds elapsed since unix epoch: 1970"),
         rarity: 0.0_f64,
         url: None,
@@ -1365,7 +1230,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Unix Millisecond Timestamp",
-        plural_name: false,
         description: Some("Milliseconds elapsed since unix epoch: 1970"),
         rarity: 0.0_f64,
         url: None,
@@ -1374,7 +1238,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "ULID",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
@@ -1383,7 +1246,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Datadog API Key",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
@@ -1392,7 +1254,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Datadog Application Key",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
@@ -1401,7 +1262,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "YouTube Video ID",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: Some("https://www.youtube.com/watch?v="),
@@ -1410,7 +1270,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Turkish Tax Number",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
@@ -1419,7 +1278,6 @@ static REGEX_PATTERNS: &[RegexPattern] = &[
     },
     RegexPattern {
         name: "Key:Value Pair",
-        plural_name: false,
         description: None,
         rarity: 0.0_f64,
         url: None,
