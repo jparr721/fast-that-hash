@@ -4,6 +4,7 @@ use clap::Parser;
 
 mod file_signatures;
 mod filter;
+mod formats;
 mod hashes;
 mod identifier;
 mod input;
