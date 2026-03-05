@@ -12,7 +12,6 @@ pub struct FormatMatch {
 }
 
 struct Format {
-    _name: &'static str,
     regex: &'static LazyLock<Regex>,
     extract: fn(&regex::Captures) -> Vec<FormatMatch>,
 }
@@ -103,17 +102,14 @@ fn extract_dcc(caps: &regex::Captures) -> Vec<FormatMatch> {
 
 static FORMATS: &[Format] = &[
     Format {
-        _name: "pwdump",
         regex: &PWDUMP_RE,
         extract: extract_pwdump,
     },
     Format {
-        _name: "shadow",
         regex: &SHADOW_RE,
         extract: extract_shadow,
     },
     Format {
-        _name: "dcc",
         regex: &DCC_RE,
         extract: extract_dcc,
     },
