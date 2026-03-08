@@ -5,6 +5,10 @@ use crate::hashes;
 #[derive(Debug, Clone, Serialize)]
 pub struct Match {
     pub matched_text: String,
+    #[serde(skip)]
+    pub start: usize,
+    #[serde(skip)]
+    pub end: usize,
     pub name: String,
     pub rarity: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -36,6 +40,8 @@ impl Identify for FormatIdentifier {
             .into_iter()
             .map(|f| Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: f.name,
                 rarity: f.rarity,
                 desc: Some(f.desc),
@@ -54,6 +60,8 @@ impl Identify for HashIdentifier {
             .into_iter()
             .map(|h| Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: h.name.to_string(),
                 rarity: if h.extended { 0.2 } else { 0.5 },
                 desc: h.desc.map(|d| d.to_string()),
@@ -71,6 +79,8 @@ impl Identify for RegexIdentifier {
             .into_iter()
             .map(|p| Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: p.name.to_string(),
                 rarity: p.rarity,
                 desc: p.description.map(|s| s.to_string()),
@@ -94,6 +104,8 @@ impl Identify for MacVendorIdentifier {
         match crate::mac_vendors::lookup_mac_vendor(input) {
             Some(vendor) => vec![Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: format!("MAC Address ({})", vendor),
                 rarity: 0.5,
                 desc: Some(format!("Vendor: {}", vendor)),
@@ -115,6 +127,8 @@ impl Identify for PhoneCodeIdentifier {
         match crate::phone_codes::lookup_phone_code(input) {
             Some(country) => vec![Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: format!("Phone Code ({})", country),
                 rarity: 0.5,
                 desc: Some(format!("Country: {}", country)),
@@ -143,6 +157,8 @@ impl Identify for MastercardIdentifier {
         match crate::mastercard::lookup_mastercard(&digits) {
             Some(company) => vec![Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: format!("Mastercard ({})", company),
                 rarity: 0.5,
                 desc: Some(format!("Issuer: {}", company)),
@@ -166,6 +182,8 @@ impl Identify for FileSignatureIdentifier {
             .into_iter()
             .map(|sig| Match {
                 matched_text: input.to_string(),
+                start: 0,
+                end: 0,
                 name: sig.desc.to_string(),
                 rarity: if sig.popular { 0.5 } else { 0.3 },
                 desc: sig.extension.map(|e| format!("Extension: .{}", e)),
@@ -199,6 +217,8 @@ mod tests {
     fn test_match_default_fields() {
         let m = Match {
             matched_text: "test".into(),
+            start: 0,
+            end: 0,
             name: "Test Match".into(),
             rarity: 0.5,
             desc: None,
@@ -217,6 +237,8 @@ mod tests {
             if input == "hello" {
                 vec![Match {
                     matched_text: input.into(),
+                    start: 0,
+                    end: 0,
                     name: "Greeting".into(),
                     rarity: 1.0,
                     desc: None,

@@ -22,6 +22,8 @@ pub struct OutputOpts {
 ///
 /// let m = Match {
 ///     matched_text: "abc".into(),
+///     start: 0,
+///     end: 0,
 ///     name: "Example".into(),
 ///     rarity: 1.0,
 ///     desc: None,
@@ -50,6 +52,8 @@ pub fn format_json(matches: &[Match]) -> String {
 ///
 /// let m = Match {
 ///     matched_text: "abc".into(),
+///     start: 0,
+///     end: 0,
 ///     name: "Example".into(),
 ///     rarity: 0.8,
 ///     desc: Some("An example match".into()),
@@ -122,6 +126,8 @@ mod tests {
     fn sample_match() -> Match {
         Match {
             matched_text: "5d41402abc4b2a76b9719d911017c592".into(),
+            start: 0,
+            end: 0,
             name: "MD5".into(),
             rarity: 0.5,
             desc: Some("MD5 hash".into()),

@@ -67,6 +67,8 @@ mod tests {
     fn make_match(name: &str, rarity: f64, tags: Vec<&str>) -> Match {
         Match {
             matched_text: "test".into(),
+            start: 0,
+            end: 0,
             name: name.into(),
             rarity,
             desc: None,
