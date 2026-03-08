@@ -2,6 +2,7 @@ use std::process;
 
 use clap::Parser;
 
+mod boundaryless;
 mod file_signatures;
 mod filter;
 mod formats;
