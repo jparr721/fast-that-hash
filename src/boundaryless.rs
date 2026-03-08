@@ -21,9 +21,13 @@ pub fn remove_submatches(mut matches: Vec<Match>) -> Vec<Match> {
 
     let mut kept: Vec<Match> = Vec::new();
     for candidate in matches {
-        let is_submatch = kept
-            .iter()
-            .any(|existing| candidate.start >= existing.start && candidate.end <= existing.end);
+        let candidate_len = candidate.end - candidate.start;
+        let is_submatch = kept.iter().any(|existing| {
+            let existing_len = existing.end - existing.start;
+            candidate.start >= existing.start
+                && candidate.end <= existing.end
+                && candidate_len < existing_len
+        });
         if !is_submatch {
             kept.push(candidate);
         }
