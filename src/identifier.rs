@@ -24,6 +24,9 @@ pub struct Match {
 
 pub trait Identify {
     fn identify(&self, input: &str) -> Vec<Match>;
+    fn identify_boundaryless(&self, input: &str) -> Vec<Match> {
+        self.identify(input)
+    }
 }
 
 pub struct FormatIdentifier;
@@ -72,6 +75,10 @@ impl Identify for HashIdentifier {
             })
             .collect()
     }
+
+    fn identify_boundaryless(&self, input: &str) -> Vec<Match> {
+        hashes::identify_boundaryless(input)
+    }
 }
 impl Identify for RegexIdentifier {
     fn identify(&self, input: &str) -> Vec<Match> {
@@ -90,6 +97,10 @@ impl Identify for RegexIdentifier {
                 john: None,
             })
             .collect()
+    }
+
+    fn identify_boundaryless(&self, input: &str) -> Vec<Match> {
+        crate::regex_patterns::identify_pattern_boundaryless(input)
     }
 }
 
@@ -268,6 +279,21 @@ mod tests {
             .flat_map(|id| id.identify("nope"))
             .collect();
         assert!(empty.is_empty());
+    }
+
+    #[test]
+    fn test_hash_identifier_boundaryless() {
+        let id = HashIdentifier;
+        let results = id.identify_boundaryless("hash=5d41402abc4b2a76b9719d911017c592 done");
+        assert!(!results.is_empty());
+        assert!(results.iter().any(|m| m.matched_text == "5d41402abc4b2a76b9719d911017c592"));
+    }
+
+    #[test]
+    fn test_regex_identifier_boundaryless() {
+        let id = RegexIdentifier;
+        let results = id.identify_boundaryless("key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ user@host end");
+        assert!(!results.is_empty());
     }
 
     #[test]
