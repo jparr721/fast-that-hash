@@ -1,6 +1,9 @@
 //! Hash identification prototypes — auto-generated from hashes.py
-use regex::RegexSet;
+use regex::{Regex, RegexSet};
 use std::sync::LazyLock;
+
+use crate::boundaryless::strip_anchors;
+use crate::identifier::Match;
 
 pub struct HashInfo {
     pub name: &'static str,
@@ -3684,4 +3687,78 @@ pub fn identify(hash: &str) -> Vec<&'static HashInfo> {
         }
     }
     results
+}
+
+struct BoundarylessHashSet {
+    set: RegexSet,
+    individual: Vec<Regex>,
+}
+
+static BOUNDARYLESS_SET: LazyLock<BoundarylessHashSet> = LazyLock::new(|| {
+    let stripped: Vec<String> = PATTERNS.iter().map(|p| strip_anchors(p)).collect();
+    let set = regex::RegexSetBuilder::new(&stripped)
+        .size_limit(64 * 1024 * 1024)
+        .build()
+        .unwrap();
+    let individual = stripped
+        .iter()
+        .map(|p| regex::RegexBuilder::new(p).size_limit(64 * 1024 * 1024).build().unwrap())
+        .collect();
+    BoundarylessHashSet { set, individual }
+});
+
+pub fn identify_boundaryless(input: &str) -> Vec<Match> {
+    let bset = &*BOUNDARYLESS_SET;
+    let set_matches = bset.set.matches(input);
+    let mut results = Vec::new();
+
+    for proto in PROTOTYPES.iter() {
+        if set_matches.matched(proto.regex_index) {
+            let re = &bset.individual[proto.regex_index];
+            for m in re.find_iter(input) {
+                for mode in proto.modes.iter() {
+                    results.push(Match {
+                        matched_text: m.as_str().to_string(),
+                        start: m.start(),
+                        end: m.end(),
+                        name: mode.name.to_string(),
+                        rarity: if mode.extended { 0.2 } else { 0.5 },
+                        desc: mode.desc.map(|d| d.to_string()),
+                        url: None,
+                        tags: vec!["Hash".to_string()],
+                        hashcat: mode.hashcat,
+                        john: mode.john.map(|j| j.to_string()),
+                    });
+                }
+            }
+        }
+    }
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_identify_boundaryless_md5_in_text() {
+        let results = identify_boundaryless("the hash is 5d41402abc4b2a76b9719d911017c592 ok");
+        assert!(results.iter().any(|m| m.matched_text == "5d41402abc4b2a76b9719d911017c592"));
+    }
+
+    #[test]
+    fn test_identify_boundaryless_no_match() {
+        let results = identify_boundaryless("no hashes here");
+        assert!(results.is_empty());
+    }
+
+    #[test]
+    fn test_identify_boundaryless_multiple() {
+        let results = identify_boundaryless(
+            "a]5d41402abc4b2a76b9719d911017c592 b=da39a3ee5e6b4b0d3255bfef95601890afd80709!"
+        );
+        let texts: Vec<&str> = results.iter().map(|m| m.matched_text.as_str()).collect();
+        assert!(texts.contains(&"5d41402abc4b2a76b9719d911017c592"));
+        assert!(texts.contains(&"da39a3ee5e6b4b0d3255bfef95601890afd80709"));
+    }
 }
