@@ -74,6 +74,10 @@ struct Args {
     #[arg(long = "no-hashcat")]
     no_hashcat: bool,
 
+    /// Find all matches inside text (boundaryless mode).
+    #[arg(short = 'b', long = "boundaryless")]
+    boundaryless: bool,
+
     /// Turn on debugging logs. -vvv for maximum logs.
     #[arg(short = 'v', long = "verbose", action = clap::ArgAction::Count)]
     verbose: u8,
@@ -174,7 +178,15 @@ fn main() {
     let inputs = input::resolve_input(&text_input, args.only_text);
 
     for text in &inputs {
-        let mut matches: Vec<Match> = all_ids.iter().flat_map(|id| id.identify(text)).collect();
+        let mut matches: Vec<Match> = if args.boundaryless {
+            let raw: Vec<Match> = all_ids
+                .iter()
+                .flat_map(|id| id.identify_boundaryless(text))
+                .collect();
+            boundaryless::remove_submatches(raw)
+        } else {
+            all_ids.iter().flat_map(|id| id.identify(text)).collect()
+        };
 
         matches = filter.apply(matches);
         sort_matches(&mut matches, args.key.as_deref(), args.reverse);
