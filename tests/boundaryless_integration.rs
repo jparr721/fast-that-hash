@@ -58,6 +58,14 @@ fn test_bcrypt_in_text() {
 }
 
 #[test]
+fn test_colon_before_hash_still_finds_md5() {
+    // Regression: "Hash: 5f4dcc..." matched Key:Value Pair pattern at [0..38]
+    // which suppressed the MD5 at [6..38] via remove_submatches.
+    let output = run_fth(&["Hash: 5f4dcc3b5aa765d61d8327deb882cf99"]);
+    assert!(output.contains("MD5"), "Colon before hash should still find MD5: {output}");
+}
+
+#[test]
 fn test_non_boundaryless_unchanged() {
     // Without -b flag, embedded hash should NOT match any anchored pattern
     let output = Command::new("cargo")

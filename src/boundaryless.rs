@@ -27,6 +27,7 @@ pub fn remove_submatches(mut matches: Vec<Match>) -> Vec<Match> {
             candidate.start >= existing.start
                 && candidate.end <= existing.end
                 && candidate_len < existing_len
+                && existing.rarity >= candidate.rarity
         });
         if !is_submatch {
             kept.push(candidate);
@@ -152,6 +153,36 @@ mod tests {
         ];
         let result = remove_submatches(matches);
         assert_eq!(result.len(), 2);
+    }
+
+    #[test]
+    fn test_remove_submatches_low_rarity_container_does_not_suppress_high_rarity() {
+        // Bug: "Hash: 5f4dcc..." matches Key:Value Pair at [0..38] with rarity 0.0,
+        // which fully contains MD5 at [6..38] with rarity 0.5. The low-rarity
+        // container should NOT suppress the higher-rarity contained match.
+        let matches = vec![
+            make_match("Hash: 5f4dcc3b5aa765d61d8327deb882cf99", 0, "Key:Value Pair", 0.0),
+            make_match("5f4dcc3b5aa765d61d8327deb882cf99", 6, "MD5", 0.5),
+        ];
+        let result = remove_submatches(matches);
+        assert!(
+            result.iter().any(|m| m.name == "MD5"),
+            "MD5 should not be suppressed by a lower-rarity container. Got: {:?}",
+            result.iter().map(|m| &m.name).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn test_remove_submatches_equal_rarity_container_still_suppresses() {
+        // When both have the same rarity, the longer match should still suppress
+        // the shorter one (existing behavior for SHA-1 subsumes MD5).
+        let matches = vec![
+            make_match("da39a3ee5e6b4b0d3255bfef95601890afd80709", 0, "SHA-1", 0.5),
+            make_match("da39a3ee5e6b4b0d3255bfef95601890", 0, "MD5", 0.5),
+        ];
+        let result = remove_submatches(matches);
+        assert_eq!(result.len(), 1);
+        assert_eq!(result[0].name, "SHA-1");
     }
 
     #[test]
