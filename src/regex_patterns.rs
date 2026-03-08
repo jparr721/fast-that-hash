@@ -1,6 +1,9 @@
 //! Regex-based pattern identification — auto-generated from regex.json
 use std::sync::LazyLock;
-use regex::RegexSet;
+use regex::{Regex, RegexSet};
+
+use crate::boundaryless::strip_anchors;
+use crate::identifier::Match;
 
 pub struct RegexPattern {
     pub name: &'static str,
@@ -1322,4 +1325,78 @@ pub fn identify_pattern(input: &str) -> Vec<&'static RegexPattern> {
         }
     }
     results
+}
+
+struct BoundarylessRegexPatternSet {
+    set: RegexSet,
+    individual: Vec<Regex>,
+    index_map: Vec<usize>,
+}
+
+static BOUNDARYLESS_REGEX_SET: LazyLock<BoundarylessRegexPatternSet> = LazyLock::new(|| {
+    let mut valid_patterns = Vec::new();
+    let mut index_map = Vec::new();
+    for (i, pat) in PATTERNS.iter().enumerate() {
+        let stripped = strip_anchors(pat);
+        if regex::Regex::new(&stripped).is_ok() {
+            valid_patterns.push(stripped);
+            index_map.push(i);
+        }
+    }
+    let set = regex::RegexSetBuilder::new(&valid_patterns)
+        .size_limit(64 * 1024 * 1024)
+        .build()
+        .unwrap();
+    let individual = valid_patterns
+        .iter()
+        .map(|p| regex::RegexBuilder::new(p).size_limit(64 * 1024 * 1024).build().unwrap())
+        .collect();
+    BoundarylessRegexPatternSet { set, individual, index_map }
+});
+
+pub fn identify_pattern_boundaryless(input: &str) -> Vec<Match> {
+    let brs = &*BOUNDARYLESS_REGEX_SET;
+    let set_matches = brs.set.matches(input);
+    let mut results = Vec::new();
+
+    for set_idx in set_matches.iter() {
+        let orig_idx = brs.index_map[set_idx];
+        let re = &brs.individual[set_idx];
+        for m in re.find_iter(input) {
+            for p in REGEX_PATTERNS.iter() {
+                if p.regex_index == orig_idx {
+                    results.push(Match {
+                        matched_text: m.as_str().to_string(),
+                        start: m.start(),
+                        end: m.end(),
+                        name: p.name.to_string(),
+                        rarity: p.rarity,
+                        desc: p.description.map(|s| s.to_string()),
+                        url: p.url.map(|s| s.to_string()),
+                        tags: p.tags.iter().map(|t| t.to_string()).collect(),
+                        hashcat: None,
+                        john: None,
+                    });
+                }
+            }
+        }
+    }
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_identify_pattern_boundaryless_finds_embedded() {
+        let results = identify_pattern_boundaryless("check ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ user@host here");
+        assert!(!results.is_empty());
+    }
+
+    #[test]
+    fn test_identify_pattern_boundaryless_no_match() {
+        let results = identify_pattern_boundaryless("nothing here");
+        assert!(results.is_empty());
+    }
 }
