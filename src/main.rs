@@ -1,6 +1,7 @@
 use std::process;
 
 use clap::Parser;
+use rayon::prelude::*;
 
 mod boundaryless;
 mod file_signatures;
@@ -177,26 +178,32 @@ fn main() {
     let all_ids = identifier::all_identifiers();
     let inputs = input::resolve_input(&text_input, args.only_text);
 
-    for text in &inputs {
-        let mut matches: Vec<Match> = if args.boundaryless {
-            let raw: Vec<Match> = all_ids
-                .iter()
-                .flat_map(|id| id.identify_boundaryless(text))
-                .collect();
-            boundaryless::remove_submatches(raw)
-        } else {
-            all_ids.iter().flat_map(|id| id.identify(text)).collect()
-        };
+    let results: Vec<(String, Vec<Match>)> = inputs
+        .par_iter()
+        .map(|text| {
+            let mut matches: Vec<Match> = if args.boundaryless {
+                let raw: Vec<Match> = all_ids
+                    .iter()
+                    .flat_map(|id| id.identify_boundaryless(text))
+                    .collect();
+                boundaryless::remove_submatches(raw)
+            } else {
+                all_ids.iter().flat_map(|id| id.identify(text)).collect()
+            };
 
-        matches = filter.apply(matches);
-        sort_matches(&mut matches, args.key.as_deref(), args.reverse);
+            matches = filter.apply(matches);
+            sort_matches(&mut matches, args.key.as_deref(), args.reverse);
+            (text.clone(), matches)
+        })
+        .collect();
 
+    for (text, matches) in &results {
         if !matches.is_empty() {
             if !args.json && inputs.len() > 1 {
                 println!("{}", text);
                 println!("{}", "-".repeat(text.len().min(60)));
             }
-            output::print_results(&matches, args.json, &output_opts);
+            output::print_results(matches, args.json, &output_opts);
         }
     }
 }

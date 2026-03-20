@@ -1,4 +1,6 @@
 use std::path::Path;
+
+use rayon::prelude::*;
 use walkdir::WalkDir;
 
 /// Resolve input to a list of strings to identify.
@@ -55,14 +57,20 @@ fn resolve_file(path: &Path) -> Vec<String> {
 }
 
 /// Recursively walk `path` and collect non-empty lines from every file found.
+///
+/// File contents are read in parallel using rayon for large directories.
 fn resolve_directory(path: &Path) -> Vec<String> {
-    let mut lines = Vec::new();
-    for entry in WalkDir::new(path).into_iter().filter_map(|e| e.ok()) {
-        if entry.file_type().is_file() {
-            lines.extend(resolve_file(entry.path()));
-        }
-    }
-    lines
+    let files: Vec<_> = WalkDir::new(path)
+        .into_iter()
+        .filter_map(|e| e.ok())
+        .filter(|e| e.file_type().is_file())
+        .map(|e| e.into_path())
+        .collect();
+
+    files
+        .par_iter()
+        .flat_map(|p| resolve_file(p))
+        .collect()
 }
 
 #[cfg(test)]

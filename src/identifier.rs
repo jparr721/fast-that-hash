@@ -22,7 +22,7 @@ pub struct Match {
     pub john: Option<String>,
 }
 
-pub trait Identify {
+pub trait Identify: Send + Sync {
     fn identify(&self, input: &str) -> Vec<Match>;
     fn identify_boundaryless(&self, input: &str) -> Vec<Match> {
         self.identify(input)
@@ -207,7 +207,7 @@ impl Identify for FileSignatureIdentifier {
     }
 }
 
-pub fn all_identifiers() -> Vec<Box<dyn Identify>> {
+pub fn all_identifiers() -> Vec<Box<dyn Identify + Send + Sync>> {
     vec![
         Box::new(FormatIdentifier),  // Format detection first (highest confidence)
         Box::new(HashIdentifier),
@@ -266,7 +266,7 @@ mod tests {
 
     #[test]
     fn test_identify_trait_dispatch() {
-        let identifiers: Vec<Box<dyn Identify>> = vec![Box::new(DummyIdentifier)];
+        let identifiers: Vec<Box<dyn Identify + Send + Sync>> = vec![Box::new(DummyIdentifier)];
         let results: Vec<Match> = identifiers
             .iter()
             .flat_map(|id| id.identify("hello"))
@@ -383,7 +383,7 @@ mod tests {
 
     #[test]
     fn test_all_identifiers_dispatch() {
-        let identifiers: Vec<Box<dyn Identify>> = all_identifiers();
+        let identifiers: Vec<Box<dyn Identify + Send + Sync>> = all_identifiers();
         let results: Vec<Match> = identifiers
             .iter()
             .flat_map(|id| id.identify("5d41402abc4b2a76b9719d911017c592"))

@@ -67,6 +67,15 @@ Seven identifiers run in order via `all_identifiers()`:
 
 Add to `src/formats.rs`: define a `LazyLock<Regex>`, write an `extract_*` function returning `Vec<FormatMatch>`, and add to the `FORMATS` array.
 
+## Releasing a New Version
+
+1. Bump `version` in `Cargo.toml`
+2. Commit the version bump (typically alongside the feature/fix commit, or as a separate `chore: bump version` commit)
+3. Tag: `git tag v<VERSION>` (e.g. `git tag v1.3.0`)
+4. Push commit and tag: `git push && git push --tags`
+
+Tags follow semver with a `v` prefix: `v1.0.0`, `v1.1.0`, etc.
+
 ## Rust Edition
 
 Uses Rust edition 2024. Requires a recent nightly or stable toolchain.
