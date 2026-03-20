@@ -5,6 +5,7 @@ pub struct FormatMatch {
     pub name: String,
     pub rarity: f64,
     pub desc: String,
+    #[cfg(test)]
     pub extracted_hash: String,
     pub tags: Vec<String>,
     pub hashcat: Option<u32>,
@@ -22,14 +23,15 @@ static PWDUMP_RE: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 fn extract_pwdump(caps: &regex::Captures) -> Vec<FormatMatch> {
-    let lm_hash = caps[1].to_string();
-    let ntlm_hash = caps[2].to_string();
+    let _lm_hash = caps[1].to_string();
+    let _ntlm_hash = caps[2].to_string();
     vec![
         FormatMatch {
             name: "NTLM".to_string(),
             rarity: 0.9,
             desc: "Windows NTLM hash extracted from pwdump format.".to_string(),
-            extracted_hash: ntlm_hash,
+            #[cfg(test)]
+            extracted_hash: _ntlm_hash,
             tags: vec!["Hash".to_string()],
             hashcat: Some(1000),
             john: Some("nt".to_string()),
@@ -38,7 +40,8 @@ fn extract_pwdump(caps: &regex::Captures) -> Vec<FormatMatch> {
             name: "LM".to_string(),
             rarity: 0.9,
             desc: "LAN Manager hash extracted from pwdump format.".to_string(),
-            extracted_hash: lm_hash,
+            #[cfg(test)]
+            extracted_hash: _lm_hash,
             tags: vec!["Hash".to_string()],
             hashcat: Some(3000),
             john: Some("lm".to_string()),
@@ -70,6 +73,7 @@ fn extract_shadow(caps: &regex::Captures) -> Vec<FormatMatch> {
         name: name.to_string(),
         rarity: 0.9,
         desc: format!("{} hash extracted from /etc/shadow line.", name),
+        #[cfg(test)]
         extracted_hash: hash,
         tags: vec!["Hash".to_string()],
         hashcat,
@@ -83,7 +87,7 @@ static DCC_RE: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 fn extract_dcc(caps: &regex::Captures) -> Vec<FormatMatch> {
-    let hash = caps[1].to_string();
+    let _hash = caps[1].to_string();
     let username = &caps[2];
     // Only match if the second part looks like a username (not all hex)
     if username.chars().all(|c| c.is_ascii_hexdigit()) && username.len() >= 16 {
@@ -93,7 +97,8 @@ fn extract_dcc(caps: &regex::Captures) -> Vec<FormatMatch> {
         name: "Domain Cached Credentials".to_string(),
         rarity: 0.9,
         desc: format!("DCC hash for user '{}' (MS Cache Hash v1).", username),
-        extracted_hash: hash,
+        #[cfg(test)]
+        extracted_hash: _hash,
         tags: vec!["Hash".to_string()],
         hashcat: Some(1100),
         john: Some("mscash".to_string()),
